@@ -15,7 +15,7 @@ public class Bird : MonoBehaviour
     SpriteRenderer _spriteRenderer;
     [Range(5,20)]
     public int Force;
-    Vector2 distance;
+    //Vector2 distance;
 
     // pred startem
     void Awake()
@@ -49,25 +49,38 @@ public class Bird : MonoBehaviour
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 desirePosition = mousePosition;
-        //float distance = Vector2.Distance(desirePosition, _startPosition);
-        distance = _startPosition - desirePosition;
-        distance.Normalize();
+        float distance = Vector2.Distance(desirePosition, _startPosition);
+        if (distance > _maxDragDistance) // pohybujeme se v kruhu
+        {
+            Vector2 direction = desirePosition - _startPosition;
+            direction.Normalize();
+            desirePosition = _startPosition + (direction * _maxDragDistance);
+        }
+        if (desirePosition.x > _startPosition.x) // pohybujeme se v půlkruhu
+        {
+            desirePosition.x = _startPosition.x;
+            _rigidBody2D.position = desirePosition;
+        }
+        transform.position = desirePosition;
     }
 
     void OnMouseUp() 
     {
         _spriteRenderer.color = Color.white;
         Debug.Log("Obarveno na bílo");
+        var currentPosition = _rigidBody2D.position;
+        Vector2 direction = _startPosition - currentPosition;
+        direction.Normalize();
         _rigidBody2D.isKinematic = false;
-        _rigidBody2D.AddForce(distance * _launchForce);
+        _rigidBody2D.AddForce(direction * _launchForce);
     }
 
     private void OnCollisionEnter2D(Collision2D colission) 
     {
-        StartCoroutine(Die());
+        StartCoroutine(ResetAfterDelay());
     }
 
-    private IEnumerator Die() 
+    private IEnumerator ResetAfterDelay() // to do list
     {
         /*
         while(flagpohyb) 
@@ -84,6 +97,11 @@ public class Bird : MonoBehaviour
         yield return new WaitForSecondsRealtime(3);
         _rigidBody2D.isKinematic = true;
         _rigidBody2D.velocity = Vector2.zero;
-        transform.position = _startPosition;
+        _rigidBody2D.position = _startPosition;
+    }
+
+    public void GenerateColor()
+    {
+        _spriteRenderer.color = Color.green;
     }
 }
