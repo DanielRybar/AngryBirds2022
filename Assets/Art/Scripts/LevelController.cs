@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
-    Monstrum[] _monsters;
+    private Monstrum[] _monsters;
+    [SerializeField]
+    private string _nextLevelName;
     void OnEnable()
     {
         _monsters = FindObjectsOfType<Monstrum>();
@@ -21,12 +23,17 @@ public class LevelController : MonoBehaviour
 
     void GoToNextLevel()
     {
-        Debug.Log("Další level");
-        //SceneManager.LoadScene();
+        Debug.Log("Další level: " + _nextLevelName);
+        SceneManager.LoadScene(_nextLevelName);
     }
 
     bool MonstersAreAllDead()
     {
-        throw new NotImplementedException();
+        foreach (Monstrum monstrum in _monsters)
+        {
+            if (monstrum.gameObject.activeSelf)
+                return false;
+        }
+        return true;
     }
 }
