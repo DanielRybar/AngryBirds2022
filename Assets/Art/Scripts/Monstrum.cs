@@ -14,7 +14,10 @@ public class Monstrum : MonoBehaviour
     {
         if(ShouldDieFromCollision(collision)) 
         {
+            FindObjectOfType<AudioManager>().Play("Prvni");
+            Debug.Log("Played");
             StartCoroutine(Die());
+            Debug.Log("Dying");
         }
     }
 
