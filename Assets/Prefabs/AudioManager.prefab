@@ -46,13 +46,19 @@ MonoBehaviour:
   sounds:
   - name: Prvni
     clip: {fileID: 8300000, guid: 0fdf4c508f952414fb7f91a83f3e9882, type: 3}
-    volume: 0.307
+    volume: 0.513
     pitch: 0.502
     loop: 0
     source: {fileID: 0}
   - name: Druhy
     clip: {fileID: 8300000, guid: 25a2c8dc704b19f408089ff89c44f934, type: 3}
-    volume: 0.201
+    volume: 0.544
+    pitch: 0.555
+    loop: 0
+    source: {fileID: 0}
+  - name: Treti
+    clip: {fileID: 8300000, guid: 90da12705f7a8a44cb5ae17637adef4d, type: 3}
+    volume: 0.545
     pitch: 0.555
     loop: 0
     source: {fileID: 0}

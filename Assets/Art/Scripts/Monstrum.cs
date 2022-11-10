@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [SelectionBase]
 public class Monstrum : MonoBehaviour
@@ -9,18 +10,22 @@ public class Monstrum : MonoBehaviour
     [SerializeField] ParticleSystem _particleSystem;
     public int Rychlost = 5;
     private bool _hasDied;
+    //[SerializeField] Text ScoreText;
+    //private int score = 0;
 
     private void OnCollisionEnter2D(Collision2D collision) 
     {
         if(ShouldDieFromCollision(collision)) 
         {
-            FindObjectOfType<AudioManager>().Play("Prvni");
             Debug.Log("Played");
             StartCoroutine(Die());
+            FindObjectOfType<AudioManager>().Play("Prvni");
             Debug.Log("Dying");
+            //score++;
+            //ScoreText.text = score.ToString();
         }
     }
-
+    
     private bool ShouldDieFromCollision(Collision2D collision)
     {
         if (_hasDied) return false;
@@ -40,17 +45,5 @@ public class Monstrum : MonoBehaviour
         yield return new WaitForSeconds(3);
         gameObject.SetActive(false);
         GameObject.FindGameObjectWithTag("CervenyPtacek").GetComponent<Bird>().GenerateColor();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

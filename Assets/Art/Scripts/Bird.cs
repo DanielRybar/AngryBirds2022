@@ -32,12 +32,6 @@ public class Bird : MonoBehaviour
         _rigidBody2D.isKinematic = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // nic
-    }
-
     void OnMouseDown()
     {
         //_spriteRenderer.color = new Color();
@@ -73,6 +67,7 @@ public class Bird : MonoBehaviour
         direction.Normalize();
         _rigidBody2D.isKinematic = false;
         _rigidBody2D.AddForce(direction * _launchForce);
+        FindObjectOfType<AudioManager>().Play("Treti");
     }
 
     private void OnCollisionEnter2D(Collision2D colission) 
